@@ -1,5 +1,7 @@
 package com.maperz.githubrepos.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -9,9 +11,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.client.RestClient;
 
 @Configuration
+@Slf4j
 public class RestClientConfiguration {
 
-    private static final String GITHUB_API_URL = "https://api.github.com";
+    @Value("${github.api.url}")
+    private String GITHUB_API_URL;
 
     @Bean
     public RestClient restClient() {

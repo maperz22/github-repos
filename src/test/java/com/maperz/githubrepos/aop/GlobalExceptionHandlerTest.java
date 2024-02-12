@@ -4,6 +4,7 @@ import com.maperz.githubrepos.aop.response.ExceptionResponse;
 import com.maperz.githubrepos.error.GithubUserNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ class GlobalExceptionHandlerTest {
 
 
     @Test
+    @DisplayName("Should handle GithubUserNotFoundException")
     public void handleGithubUserNotFoundException() {
 
         GithubUserNotFoundException ex = new GithubUserNotFoundException("User not found");
@@ -29,6 +31,7 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    @DisplayName("Should handle HttpMediaTypeNotAcceptableException")
     public void handleHttpMediaTypeNotAcceptableException() {
 
         ResponseEntity<ExceptionResponse> response = exceptionHandler.handleHttpMediaTypeNotAcceptableException();

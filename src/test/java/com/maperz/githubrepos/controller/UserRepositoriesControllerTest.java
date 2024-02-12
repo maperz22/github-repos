@@ -4,6 +4,7 @@ import com.maperz.githubrepos.dto.userrepo.UserRepository;
 import com.maperz.githubrepos.error.GithubUserNotFoundException;
 import com.maperz.githubrepos.service.UserRepositoriesService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -32,6 +33,7 @@ class UserRepositoriesControllerTest {
     }
 
     @Test
+    @DisplayName("Should return non-empty list of repositories")
     void getUserRepositories_ReturnsNonEmptyList() {
         // Given
         when(userRepositoriesService.getUserRepositories(anyString()))
@@ -46,6 +48,7 @@ class UserRepositoriesControllerTest {
     }
 
     @Test
+    @DisplayName("Should throw GithubUserNotFoundException when user not found")
     void getUserRepositories_UserNotFound() {
         // Given
         when(userRepositoriesService.getUserRepositories(anyString()))

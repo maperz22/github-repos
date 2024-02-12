@@ -7,6 +7,7 @@ import com.maperz.githubrepos.error.GithubUserNotFoundException;
 import com.maperz.githubrepos.service.UserRepositoriesService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -60,6 +61,7 @@ class UserRepositoriesServiceImplTest {
     }
 
     @Test
+    @DisplayName("Should return non-empty list of repositories")
     void getUserRepositories_Success() {
 
         List<UserRepository> userRepositories = userRepositoriesService.getUserRepositories("username");
@@ -80,11 +82,13 @@ class UserRepositoriesServiceImplTest {
     }
 
     @Test
+    @DisplayName("Should throw GithubUserNotFoundException when user not found")
     void getUserRepositories_UserNotFound() {
         assertThrows(GithubUserNotFoundException.class, () -> userRepositoriesService.getUserRepositories("unknown"));
     }
 
     @Test
+    @DisplayName("Should return empty list of repositories")
     void getUserRepositories_NoRepos() {
         stubFor(get(urlEqualTo("/users/username/repos"))
                 .willReturn(aResponse()
@@ -97,4 +101,18 @@ class UserRepositoriesServiceImplTest {
         assertEquals(0, userRepositories.size());
     }
 
+    @Test
+    @DisplayName("Should return empty list of branches")
+    void getUserRepositories_NoBranches() {
+        stubFor(get(urlEqualTo("/repos/owner1/repo1/branches"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody("[]")));
+
+        List<UserRepository> userRepositories = userRepositoriesService.getUserRepositories("username");
+
+        assertEquals(2, userRepositories.size());
+        assertEquals(0, userRepositories.get(0).branches().size());
+    }
 }
