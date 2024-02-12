@@ -1,0 +1,14 @@
+[
+  {
+    "name": "branch3",
+    "commit": {
+      "sha": "sha3"
+    }
+  },
+  {
+    "name": "branch4",
+    "commit": {
+      "sha": "sha4"
+    }
+  }
+]
