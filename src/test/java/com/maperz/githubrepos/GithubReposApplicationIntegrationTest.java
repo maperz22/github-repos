@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -96,9 +97,9 @@ public class  GithubReposApplicationIntegrationTest {
 		webTestClient.get().uri("/api/v1/user-repositories/username")
 				.header("Accept", "application/xml")
 				.exchange()
-				.expectStatus().isEqualTo(406)
+				.expectStatus().isEqualTo(HttpStatus.NOT_ACCEPTABLE.value())
 				.expectBody()
-				.jsonPath("$.status").isEqualTo(406)
+				.jsonPath("$.status").isEqualTo(HttpStatus.NOT_ACCEPTABLE.value())
 				.jsonPath("$.message").isEqualTo("This API supports only 'Accept: application/json' header");
 	}
 

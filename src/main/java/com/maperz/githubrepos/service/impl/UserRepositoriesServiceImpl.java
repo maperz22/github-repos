@@ -28,7 +28,6 @@ public class UserRepositoriesServiceImpl implements UserRepositoriesService {
                 .map(repo -> new UserRepository(repo.name(), repo.getOwnerLogin(), getBranches(repo)))
                 .toList();
     }
-
     private List<Repo> getRepos(String username) {
         List<Repo> repoList =
                 restClient.get()
@@ -40,12 +39,6 @@ public class UserRepositoriesServiceImpl implements UserRepositoriesService {
                             throw new GithubUserNotFoundException("User " + username + " not found on Github");
                         })
                 .body(new ParameterizedTypeReference<List<Repo>>(){});
-        /*if (repoList == null) {
-            throw new GithubUserNotFoundException("User not found");
-        } else {
-            return repoList.stream().filter(repo -> !repo.fork()).toList();
-        }*/
-
         return Optional.ofNullable(repoList).map(repos -> repos.stream()
                 .filter(repo -> !repo.fork())
                 .toList()).orElseThrow(() -> new GithubUserNotFoundException("User" + username + "not found"));
@@ -57,8 +50,8 @@ public class UserRepositoriesServiceImpl implements UserRepositoriesService {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<Branch>>() {});
-        return Optional.ofNullable(rawBranches).map(branches -> branches.stream()
-                .map(branch -> new BranchResponse(branch.name(), branch.getLastCommitSha()))
-                .toList()).orElse(List.of());
+            return Optional.ofNullable(rawBranches).map(branches -> branches.stream()
+                    .map(branch -> new BranchResponse(branch.name(), branch.getLastCommitSha()))
+                    .toList()).orElse(List.of());
     }
 }
