@@ -5,7 +5,7 @@ COPY pom.xml /app
 RUN mvn dependency:resolve
 COPY . /app
 RUN mvn clean
-RUN mvn package -DskipTests -X
+RUN mvn package
 
 FROM openjdk:21
 COPY --from=build /app/target/*.jar app.jar
