@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
@@ -24,9 +25,9 @@ class GlobalExceptionHandlerTest {
 
         ResponseEntity<ExceptionResponse> response = exceptionHandler.handleGithubUserNotFoundException(ex);
 
-        assertEquals(HttpStatusCode.valueOf(404), response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(404, response.getBody().status());
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getBody().status());
         assertEquals("User not found", response.getBody().message());
     }
 
@@ -36,9 +37,9 @@ class GlobalExceptionHandlerTest {
 
         ResponseEntity<ExceptionResponse> response = exceptionHandler.handleHttpMediaTypeNotAcceptableException();
 
-        assertEquals(HttpStatusCode.valueOf(406), response.getStatusCode());
+        assertEquals(HttpStatus.NOT_ACCEPTABLE, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(406, response.getBody().status());
+        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getBody().status());
         assertEquals("This API supports only 'Accept: application/json' header", response.getBody().message());
     }
 
