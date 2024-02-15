@@ -1,8 +1,12 @@
-# github-repos
+# Github-repos
 
 Github-repos is an application created for the recruitment process, enabling users to quickly search GitHub repositories to find those that are not forks. 
 The app displays the repository name, owner's login, and a list of branches with the last commit. 
 It's an ideal tool for recruiters and developers who want to quickly assess a candidate's GitHub activity.
+
+## Demo Aplikacji
+
+Aplikacja jest zdeployowana na Heroku i dostępna pod adresem: [https://github-repos-3b544ac9e7d6.herokuapp.com/](https://github-repos-3b544ac9e7d6.herokuapp.com/api/v1/user-repositories/maperz22)
 
 ## Prerequisites
 
