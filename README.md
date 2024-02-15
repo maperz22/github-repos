@@ -1,12 +1,22 @@
 # github-repos
-This repository contains the latest source code of the GitHubRepoSearch app made for recruitment process
 
-## What does the API do?
+Github-repos is an application created for the recruitment process, enabling users to quickly search GitHub repositories to find those that are not forks. 
+The app displays the repository name, owner's login, and a list of branches with the last commit. 
+It's an ideal tool for recruiters and developers who want to quickly assess a candidate's GitHub activity.
 
-App is used to check all user's repositories which are not forks with an instance of:
-  1. Repository name.
-  2. Repostiory owner's login.
-  3. A list of branches with their last commit's sha.
+## Prerequisites
+
+Before you run the application, make sure the following requirements are met:
+- Docker installed (for running with Docker).
+- Maven and JDK version 17 or later installed (for running without Docker).
+
+## Installing Docker
+
+If you don't have Docker installed, visit the [official Docker website](https://docs.docker.com/get-docker/) and follow the instructions for your operating system.
+
+## Installing Maven
+
+Instructions for installing Maven can be found on the [official Apache Maven website](https://maven.apache.org/install.html).
 
 ## How to run the application using Docker
 
@@ -20,16 +30,19 @@ Since the app has been uploaded to Docker Hub you can easily pull the container 
 1. Run `mvn clean test` in order to test the app before usage.
 2. After that run `mvn spring-boot:run` to run the app.
 
-## How to use
-CONSIDER USING POSTMAN
+## Usage Examples
 
-Use `http://localhost:8080/api/v1/{$username}/repos` with `application\json` as an `Accept` header to check the repositories.
-JSON response will be given. Example:
+To check repositories for the user `exampleUser`, use the following URL:
+
+`http://localhost:8080/api/v1/exampleUser/repos`
+
+You will receive a JSON with a list of repositories that are not forks, along with branch names and the latest commits.
+
 ```
 [
     {
-        "name": "GitHubRepoSearch",
-        "owner": "maperz22",
+        "name": "exampleRepostitory",
+        "owner": "exampleUser",
         "branches": [
             {
                 "name": "master",
@@ -44,8 +57,16 @@ JSON response will be given. Example:
 ```
 
 ------
+## Error Handling
+
+If you encounter errors, here are some tips on how to deal with them:
+
+- **406 Not Acceptable**: Ensure that the `Accept` header is set to `application/json`.
+- **404 Not Found**: Verify that the username provided is correct and that the user has public repositories.
+
 If you use a different `Accept` header, you will be given a `406 HTTP Status Code`.
 Then the response will be:
+
 ```
 {
     "status": 406,
@@ -53,12 +74,20 @@ Then the response will be:
 }
 ```
 
------
 If you pass an username that does not exists, you will be given a `404 HTTP Status CODE`.
 Then the response will be:
+
 ```
 {
     "status": 404,
     "message": "User not found"
 }
 ```
+
+## License
+
+This project is licensed under the MIT License. Details can be found in the LICENSE file.
+
+## Contact
+
+If you have any questions about the application send an email to dabrwowski.racing.35@gmail.com.
